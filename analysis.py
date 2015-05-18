@@ -1,0 +1,110 @@
+# Import all libraries needed for the tutorial
+
+# General syntax to import specific functions in a library: 
+##from (library) import (specific library function)
+from pandas import DataFrame, read_csv
+
+# General syntax to import a library but no functions: 
+##import (library) as (give the library a nickname/alias)
+import matplotlib.pyplot as plt
+import pandas as pd #this is how I usually import pandas
+import sys #only needed to determine Python version number
+
+print ('Python version ' + sys.version)
+print ('Pandas version ' + pd.__version__)
+
+import numpy as np
+import csv as csv
+
+import xlwt
+from pandas import ExcelWriter
+from pandas import ExcelFile
+
+
+# Data Cleaning and preparing
+
+#Preparing Crime Data
+
+df = pd.read_csv("c://projects/dataanalysis/public/crime.csv")
+crime = df.ix[ 1:2000 , ["INCIDENT_TYPE_DESCRIPTION","Location","Year"]]
+
+mask = crime.Location != "(0E-8, 0E-8)"
+crime = crime[mask]
+
+from geopy.exc import GeocoderTimedOut
+from geopy.geocoders import Nominatim
+geolocator = Nominatim()
+
+def getZipforLocation(x):
+    try:
+        location = geolocator.reverse(x).raw['address']             
+        return int(float(location['postcode']))
+    except:
+        return 0
+    return 0
+
+crime['Zip'] = crime['Location'].apply(lambda x: getZipforLocation(x.replace("(","").replace(")","").strip()))
+mask = crime['Zip'] != 0
+crime = crime[mask]
+
+print(crime)
+print(crime.dtypes)
+
+#Crime data Ready
+
+#Preparing Restaurant Data                                       
+
+dfr = pd.read_csv("c://projects/dataanalysis/public/restaurant.csv")
+rest = dfr.ix[ : ,["BusinessName","Zip","LicenseAddDtTm"]]
+
+mask = pd.notnull(rest['LicenseAddDtTm'])
+rest = rest[mask]
+
+from datetime import datetime
+rest['LicYear'] = rest['LicenseAddDtTm'].apply(lambda x: float(datetime.strptime(x, '%m/%d/%Y %H:%M').year))
+
+print(rest)
+print(rest.dtypes)
+
+# Restaurant Data Ready
+
+# Data Analysis
+
+result = pd.merge(rest, crime, on='Zip', how='left')
+
+mask =  (pd.isnull(result.Year)) | (result.LicYear <= result.Year)
+result = result[mask]
+a = DataFrame({'DangerLevel' : result.groupby( [ "BusinessName", "Zip"] )['INCIDENT_TYPE_DESCRIPTION'].count()}).reset_index()
+print(a)
+print(type(a))
+
+# Data Ready
+
+# Printing to JSON File
+
+a.to_json("c://projects/dataanalysis/public/analysis.json")
+
+#Plotting diagram
+
+plt.figure(); a.plot(x='BusinessName', y='DangerLevel');
+
+    
+
+
+  
+
+
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
