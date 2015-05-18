@@ -1,14 +1,8 @@
-# Import all libraries needed for the tutorial
-
-# General syntax to import specific functions in a library: 
-##from (library) import (specific library function)
 from pandas import DataFrame, read_csv
 
-# General syntax to import a library but no functions: 
-##import (library) as (give the library a nickname/alias)
 import matplotlib.pyplot as plt
-import pandas as pd #this is how I usually import pandas
-import sys #only needed to determine Python version number
+import pandas as pd 
+import sys 
 
 print ('Python version ' + sys.version)
 print ('Pandas version ' + pd.__version__)
@@ -25,8 +19,8 @@ from pandas import ExcelFile
 
 #Preparing Crime Data
 
-df = pd.read_csv("c://projects/dataanalysis/public/crime.csv")
-crime = df.ix[ 1:2000 , ["INCIDENT_TYPE_DESCRIPTION","Location","Year"]]
+df = pd.read_csv("crime.csv")
+crime = df.ix[ 1:5 , ["INCIDENT_TYPE_DESCRIPTION","Location","Year"]]
 
 mask = crime.Location != "(0E-8, 0E-8)"
 crime = crime[mask]
@@ -54,7 +48,7 @@ print(crime.dtypes)
 
 #Preparing Restaurant Data                                       
 
-dfr = pd.read_csv("c://projects/dataanalysis/public/restaurant.csv")
+dfr = pd.read_csv("restaurant.csv")
 rest = dfr.ix[ : ,["BusinessName","Zip","LicenseAddDtTm"]]
 
 mask = pd.notnull(rest['LicenseAddDtTm'])
@@ -82,7 +76,7 @@ print(type(a))
 
 # Printing to JSON File
 
-a.to_json("c://projects/dataanalysis/public/analysis.json")
+a.to_json("analysis1.json")
 
 #Plotting diagram
 
