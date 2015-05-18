@@ -1,6 +1,6 @@
 Welcome to the DataAnalysisRestaurant-Crime wiki!
 
-This project provides an analysis of relation between two datasets namely 1. “Active Food Establishment Licenses” 2. “Crime Incident Reports”
+This project provides an analysis of relation between two datasets namely 1. â€œActive Food Establishment Licensesâ€ 2. â€œCrime Incident Reportsâ€
 
 The analysis will determine how crime is related with respect to restaurants in boston. It will answer questions line "Which is the safest restaurant in Boston?" or "What is the most dangerous Dunkin Donuts in Boston?"
 
@@ -17,3 +17,12 @@ Finding relationship
 Join the restaurant and crime data sets on 'Zip Code'. This will return a data frame with information for crime incidents in the area for each restaurant.
 Group the by restaurants and find the count of crimes incidents in the area. This pointer indicates how dangerous the area is.For e.g IncidentCount 10 indicates the restaurant is dangerous with frequent crimes in its area.
 Exporting the result The result is exported in JSON file.
+ 
+Result: 
+JSON File : analysis.json
+{"BusinessName:{"0":"a"}", "Zip:{"0":"02120"}", "IncidentCount:{"0":"5"}"}
+
+Business Name : The name of the restaurant
+Zip code : Zip code of the area in which the restaurant is located
+Incident Count : The number of crime incidents that have occured in the area. A high count indicates the area is not safe
+The values are indexed by integer values.
