@@ -4,6 +4,17 @@ This project provides an analysis of relation between two datasets namely 1. “
 
 The analysis will determine how crime is related with respect to restaurants in boston. It will answer questions line "Which is the safest restaurant in Boston?" or "What is the most dangerous Dunkin Donuts in Boston?"
 
+Setup Required :
+1. Python 3.4
+2. Python packages 
+   - pandas
+   -numpy
+   -csv
+   -geopy
+   -sys
+   -datetime
+   
+
 Implementation: We are using the python pandas library for data analysis. Following are the steps performed during analysis.The raw data is in csv format. We will use the "Location" column information to link the two datasets
 
 Loading and Cleaning the data.
@@ -26,3 +37,9 @@ Business Name : The name of the restaurant
 Zip code : Zip code of the area in which the restaurant is located
 Incident Count : The number of crime incidents that have occured in the area. A high count indicates the area is not safe
 The values are indexed by integer values.
+
+
+Learned: 
+- Python 
+- Data analysis
+- Pandas
